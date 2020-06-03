@@ -45,7 +45,7 @@ dependencies {
     implementation("javax.annotation:javax.annotation-api")
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.configuration:micronaut-flyway")
+    implementation("io.micronaut.flyway:micronaut-flyway:$micronautFlywayVersion")
     implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
     implementation 'jakarta.persistence:jakarta.persistence-api:2.2.3'
 
