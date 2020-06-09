@@ -26,6 +26,7 @@ configurations {
                 }
             }
             force 'io.micronaut:micronaut-jdbc:2.2.6'
+            force "io.micronaut.flyway:micronaut-flyway:$micronautFlywayVersion"
         }
     }
 }
