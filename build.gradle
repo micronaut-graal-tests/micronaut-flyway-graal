@@ -49,9 +49,7 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation 'jakarta.persistence:jakarta.persistence-api:2.2.3'
-    implementation "io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion", {
-        exclude group: 'io.micronaut', module: 'micronaut-jdbc'
-    }
+    implementation "io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion"
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtime "org.mariadb.jdbc:mariadb-java-client"
