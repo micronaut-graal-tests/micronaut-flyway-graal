@@ -1,7 +1,7 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.diffplug.eclipse.apt" version "3.22.0"
+    id "com.github.johnrengelman.shadow" version "6.0.0"
     id "application"
-    id "net.ltgt.apt-eclipse" version "0.21"
 }
 
 version "0.1"
@@ -36,8 +36,8 @@ dependencies {
     annotationProcessor("io.micronaut:micronaut-validation")
     annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronautDataVersion"
 
-    compileOnly enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-    compileOnly "org.graalvm.nativeimage:svm"
+    compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
+    compileOnly("org.graalvm.nativeimage:svm")
 
     implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation("io.micronaut:micronaut-inject")
@@ -52,7 +52,7 @@ dependencies {
     implementation "io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion"
 
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
-    runtime "org.postgresql:postgresql"
+    runtimeOnly("org.postgresql:postgresql")
 
     testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
@@ -67,9 +67,27 @@ dependencies {
 test.classpath += configurations.developmentOnly
 
 mainClassName = "micronaut.example.Application"
+
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion('1.8')
+    targetCompatibility = JavaVersion.toVersion('1.8')
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll([
+        '-parameters',
+        // enables incremental compilation
+        '-Amicronaut.processing.incremental=true',
+        '-Amicronaut.processing.annotations=micronaut.example.*',
+        "-Amicronaut.processing.group=$project.group",
+        "-Amicronaut.processing.module=$project.name",
+    ])
 }
 
 shadowJar {
@@ -79,16 +97,11 @@ shadowJar {
 tasks.withType(JavaExec) {
     classpath += configurations.developmentOnly
     jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll([
-        '-parameters',
-        // enables incremental compilation
-        '-Amicronaut.processing.incremental=true',
-        '-Amicronaut.processing.annotations=com.example.*',
-        '-Amicronaut.processing.group=micronaut.example',
-        '-Amicronaut.processing.module=flyway',
-    ])
+    if (gradle.startParameter.continuous) {
+        systemProperties(
+            'micronaut.io.watch.restart': 'true',
+            'micronaut.io.watch.enabled': 'true',
+            "micronaut.io.watch.paths": "src/main"
+        )
+    }
 }
