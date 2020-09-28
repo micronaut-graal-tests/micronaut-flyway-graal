@@ -25,10 +25,6 @@ configurations {
                     details.useVersion micronautDataVersion
                 }
             }
-
-            // Once we release micronaut-flyway 2.1.0 we can remove these two lines
-            force 'io.micronaut.flyway:micronaut-flyway:2.1.0.BUILD-SNAPSHOT'
-            force 'org.flywaydb:flyway-core:6.5.1'
         }
     }
 }
