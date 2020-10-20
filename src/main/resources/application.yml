@@ -17,3 +17,8 @@ flyway:
       locations:
         - classpath:databasemigrations
         - classpath:other
+---
+endpoints:
+  flyway:
+    enabled: true
+    sensitive: false
