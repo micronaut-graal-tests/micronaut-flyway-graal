@@ -61,4 +61,5 @@ java {
 
 nativeImage {
     imageName("flyway-mariadb")
+    args = ["-H:+StaticExecutableWithDynamicLibC"]
 }
