@@ -61,5 +61,4 @@ java {
 
 nativeImage {
     imageName("flyway-postgres")
-    args = ["-H:+StaticExecutableWithDynamicLibC"]
 }
