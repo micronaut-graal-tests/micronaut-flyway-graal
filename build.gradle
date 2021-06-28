@@ -107,3 +107,8 @@ tasks.withType(JavaExec) {
         )
     }
 }
+
+nativeImage {
+    imageName('flyway-h2')
+    args = ['-H:+StaticExecutableWithDynamicLibC', '-Dflyway.locations=classpath:databasemigrations,classpath:other']
+}
