@@ -9,7 +9,6 @@ version "0.1"
 group "micronaut.example"
 
 repositories {
-    jcenter()
     mavenCentral()
     maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
 }
