@@ -1,3 +1,3 @@
 #!/bin/bash
-./gradlew nativeImage
-cp build/native-image/flyway-postgres .
+./gradlew nativeCompile
+cp build/native/nativeCompile/flyway-postgres .
